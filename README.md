@@ -9,20 +9,17 @@ This project implements the **Temporal Fusion Transformer (TFT)** for time serie
 
 ---
 
-## Table of Contents
+## **Table of Contents**
+1. [Introduction](#introduction)
+2. [Setup and Installation](#setup-and-installation)
+3. [Data Preparation](#data-preparation)
+4. [Model Building](#model-building)
+5. [Evaluation](#evaluation)
+6. [Results and Insights](#results-and-insights)
+7. [Conclusion](#conclusion)
+8. [References](#references)
+9. [Author and Acknowledgments](#author-and-acknowledgments)
 
-1. [Project Objectives](#project-objectives)
-2. [Installation](#installation)
-3. [Dataset Description](#dataset-description)
-4. [Methodology](#methodology)
-    - [Data Preparation and Visualization](#data-preparation-and-visualization)
-    - [Feature Engineering](#feature-engineering)
-    - [Model Training and Cross-Validation](#model-training-and-cross-validation)
-    - [Parameter Tuning and Model Optimization](#parameter-tuning-and-model-optimization)
-    - [Implementation and Forecasting](#implementation-and-forecasting)
-5. [Results](#results)
-6. [Contributing](#contributing)
-7. [License](#license)
 
 ---
 
@@ -68,129 +65,114 @@ The dataset includes historical electricity price data for France (FR) and Belgi
 ---
 
 ## Methodology
+Here's a sample README.md content template based on the inspected notebook:
 
-### 1. Data Preparation and Visualization
+---
 
-- **Loading Data**: The dataset is loaded from CSV files.
-- **Handling Missing Data**: Missing values are interpolated.
-- **Visualization**: Price trends and seasonal patterns are visualized using line and box plots.
+## **3. Data Preparation**
 
+### **Import Required Libraries**
 ```python
+# Standard Libraries
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from statsmodels.tsa.seasonal import seasonal_decompose
+from sklearn.model_selection import ParameterGrid
+from sklearn.metrics import (mean_absolute_error, 
+                             mean_squared_error, 
+                             mean_absolute_percentage_error)
 
+# Darts Functions
+from darts.timeseries import TimeSeries
+from darts.utils.timeseries_generation import datetime_attribute_timeseries
+from darts.dataprocessing.transformers import Scaler
+from darts.models import TFTModel
+```
+
+---
+
+### **Load Data**
+```python
 # Load the dataset
-df = pd.read_csv("electricity_prices.csv")
-df.interpolate(method="linear", inplace=True)
-
-# Visualize electricity prices
-plt.plot(df['Datetime'], df['Price'])
-plt.title("Electricity Price Trends")
-plt.show()
+data = pd.read_csv("your_dataset.csv")
 ```
 
----
-
-### 2. Feature Engineering
-
-- **Time Features**: Extracted date features like hour, day, and month.
-- **Lag Features**: Created lag variables for past prices.
-- **Scaling**: Standardization of numerical features.
-
+### **Data Preprocessing**
 ```python
-from sklearn.preprocessing import StandardScaler
-
-# Feature extraction
-df['hour'] = pd.to_datetime(df['Datetime']).dt.hour
-df['day'] = pd.to_datetime(df['Datetime']).dt.day
-
-# Scaling features
-scaler = StandardScaler()
-df['scaled_price'] = scaler.fit_transform(df[['Price']])
+# Preprocess the data (example)
+data['Date'] = pd.to_datetime(data['Date'])
+data.set_index('Date', inplace=True)
 ```
 
 ---
 
-### 3. Model Training and Cross-Validation
+## **4. Model Building**
 
-- **Train-Test Split**: Data is split into training, validation, and test sets.
-- **Cross-Validation**: Implemented to ensure generalization.
-- **Model Initialization**: TFT model is initialized with default parameters.
-
+### **Model Initialization**
 ```python
-from sklearn.model_selection import train_test_split
-
-# Split data
-train, test = train_test_split(df, test_size=0.2, shuffle=False)
+model = TFTModel(
+    input_chunk_length=30,
+    output_chunk_length=7,
+    hidden_size=32,
+    lstm_layers=2,
+    num_attention_heads=4,
+    dropout=0.1,
+    batch_size=16,
+    n_epochs=100,
+)
 ```
 
----
-
-### 4. Parameter Tuning and Model Optimization
-
-- **Grid Search**: Hyperparameter tuning using Grid Search.
-- **Parameters Tuned**:
-  - Learning Rate
-  - Number of Layers
-  - Hidden Units
-  - Dropout Rate
-
+### **Model Training**
 ```python
-from sklearn.model_selection import GridSearchCV
-
-# Define model and parameter grid
-param_grid = {
-    "learning_rate": [0.01, 0.001],
-    "hidden_units": [32, 64],
-    "dropout_rate": [0.1, 0.2]
-}
-grid_search = GridSearchCV(estimator=tft_model, param_grid=param_grid)
+train, val = TimeSeries.split(data, 0.8)
+model.fit(train)
 ```
 
 ---
 
-### 5. Implementation and Forecasting
+## **5. Evaluation**
 
-- **Model Training**: The model is trained using the optimal parameters.
-- **Forecast Generation**: Predictions for the test set are generated.
-- **Evaluation Metrics**:
-  - Mean Absolute Error (MAE)
-  - Root Mean Square Error (RMSE)
-
+### **Model Predictions**
 ```python
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+forecast = model.predict(n=30, series=train)
+```
 
-# Generate predictions
-y_pred = tft_model.predict(test_features)
+### **Performance Metrics**
+```python
+mae = mean_absolute_error(val, forecast)
+mse = mean_squared_error(val, forecast)
+mape = mean_absolute_percentage_error(val, forecast)
 
-# Evaluate model
-mae = mean_absolute_error(test_labels, y_pred)
-rmse = mean_squared_error(test_labels, y_pred, squared=False)
-print(f"MAE: {mae}, RMSE: {rmse}")
+print(f"MAE: {mae}, MSE: {mse}, MAPE: {mape}%")
 ```
 
 ---
 
-## Results
-
-- **Model Performance**: MAE and RMSE scores are reported.
-- **Visual Comparison**: Actual vs. predicted electricity prices are visualized.
-
----
-
-## Contributing
-
-We welcome contributions to improve the model and expand its capabilities. Follow these steps:
-
-1. Fork the repository.
-2. Create a new branch.
-3. Submit a pull request.
+## **6. Results and Insights**
+- Forecast visualization
+- Performance evaluation graphs
+- Key insights
 
 ---
 
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+## **7. Conclusion**
+- Summary of the process
+- Lessons learned and next steps
 
 ---
 
+## **8. References**
+- [Darts Documentation](https://github.com/unit8co/darts)
+- [Temporal Fusion Transformer Paper](https://arxiv.org/abs/1912.09363)
+
+---
+
+## **9. Author and Acknowledgments**
+- Project Author: [Your Name]
+- Acknowledgments: Contributors, Tutorials, and Online Communities
+
+---
+
+Let me know if you'd like more details on specific sections! 🚀
