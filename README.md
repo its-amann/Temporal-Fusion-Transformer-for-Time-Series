@@ -10,13 +10,14 @@
 
 <p align="center">
   <a href="https://github.com/your-username/your-repo">
-    <img src="https://img.shields.io/github/license/your-username/your-repo.svg" alt="License">
+    <img src="https://img.shields.io/github/license/its-amann/Temporal-Fusion-Transformer-for-Time-Series
+.svg" alt="License">
   </a>
   <a href="https://github.com/your-username/your-repo/issues">
-    <img src="https://img.shields.io/github/issues/your-username/your-repo.svg" alt="Issues">
+    <img src="https://img.shields.io/github/issues/its-amann/Temporal-Fusion-Transformer-for-Time-Series.svg" alt="Issues">
   </a>
   <a href="https://github.com/your-username/your-repo/stargazers">
-    <img src="https://img.shields.io/github/stars/your-username/your-repo.svg" alt="Stars">
+    <img src="https://img.shields.io/github/stars/its-amann/Temporal-Fusion-Transformer-for-Time-Series.svg" alt="Stars">
   </a>
 </p>
 
