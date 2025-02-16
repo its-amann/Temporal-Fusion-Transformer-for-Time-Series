@@ -81,7 +81,7 @@ graph TD
 </div>
 
 ### Price Analysis
-![Hourly Rate Analysis](_asserts/eda hourly rate price.png)
+![Hourly Rate Analysis](https://github.com/its-amann/Temporal-Fusion-Transformer-for-Time-Series/blob/main/_asserts/eda%20hourly%20rate%20price.png)
 - Price variation patterns
 - Correlation with consumption
 - Peak pricing periods
