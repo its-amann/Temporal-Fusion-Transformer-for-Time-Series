@@ -57,7 +57,7 @@ graph TD
 - Exogenous variables capturing external factors
 
 ### Data Preparation
-![Data Preparation](_asserts/preparing data for tft.png)
+![Data Preparation](https://github.com/its-amann/Temporal-Fusion-Transformer-for-Time-Series/blob/main/_asserts/preparing%20data%20for%20tft.png)
 - Feature normalization and scaling
 - Time-based feature engineering
 - Missing value handling
