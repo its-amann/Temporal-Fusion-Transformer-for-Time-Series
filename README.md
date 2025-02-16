@@ -1,4 +1,4 @@
-# 🔮 Temporal Fusion Transformer for Multi-Series Time Series Forecasting
+# 🔮 Temporal Fusion Transformer for Single Series Time Series Forecasting
 
 <div align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue.svg" alt="Python 3.8+"/>
@@ -10,12 +10,11 @@
 
 ## 📊 Project Overview
 
-This project implements a state-of-the-art Temporal Fusion Transformer (TFT) model for multi-series time series forecasting of electricity consumption data. The model is designed to capture complex temporal patterns and dependencies across multiple regions while incorporating exogenous variables.
+This project implements a state-of-the-art Temporal Fusion Transformer (TFT) model for single series time series forecasting of electricity consumption data. The model is designed to capture complex temporal patterns and dependencies across multiple regions while incorporating exogenous variables.
 
 ### Key Features
 - Multi-horizon forecasting capability
 - Interpretable attention mechanisms
-- Handling of multiple time series simultaneously
 - Integration of static and dynamic covariates
 - Uncertainty quantification for predictions
 
