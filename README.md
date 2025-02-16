@@ -51,7 +51,7 @@ graph TD
 ## 📈 Data Analysis & Insights
 
 ### Initial Data Exploration
-![Data Overview](_asserts/viewing the data.png)
+![Data Overview](https://github.com/its-amann/Temporal-Fusion-Transformer-for-Time-Series/blob/main/_asserts/viewing%20the%20data.png)
 - Multi-regional electricity consumption data
 - Hourly granularity with 5 regions
 - Exogenous variables capturing external factors
